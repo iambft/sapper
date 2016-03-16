@@ -1,163 +1,224 @@
-function run(){
-	var xStart = 3,
-		yStart = 1,
-		xFin = 1,
-		yFin = 0;
-	position(xStart,yStart,xStart,yStart);
-	finishPositionShow(finishPosition());
-	choiceRoute(xStart,yStart);
+table.addEventListener('click', function (evt) {
+    if (evt.target.nodeName.toLowerCase() === 'div') {
+        processButtonClick(evt.target);
+    };
+});
+
+table.addEventListener('contextmenu', function (evt) {
+    if (evt.target.nodeName.toLowerCase() === 'div') {
+        evt.preventDefault();
+        processButtonClickRight(evt.target);
+    };
+});
+
+startButton.addEventListener('click', matrixData);
+
+infoButton.addEventListener('click', info);
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-function finishPosition(){
-	var xFin = 1,
-		yFin = 0;
-	return [xFin,yFin];
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-function finishPositionShow(finPos){
-	field[finPos[1]][finPos[0]].elem.classList.add("finishCell");
+function reload() {
+    location.reload(false);
 };
 
-function position(x,y,x1,y1){
-	field[y][x].elem.classList.remove("currentCell");
-	field[y1][x1].elem.classList.add("currentCell");
+function info(){
+	alert("Левая кнопка мыши открывает ячейки, правая маркирует. Нужно поставить маркер на все бомбы.");
 };
 
-function choiceRoute(x,y, direct){
-	var routeArr = [],
-		route = null;
-	routeArr = choiceRouteWOWall(x,y,routeArr);
-	if(ifNotFinish(x,y)){
-		ifNotFinishDo(x,y,routeArr,route,direct);
-	}else{
-		alert("finish");
+function cellObj(table) {
+    var self = this;
+    this.positionId;
+    this.bomb = false;
+    this.open = false;
+    this.iThink = false;
+    this.elem = null;
+    this.create = function (a, b) {
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("cell");
+        newDiv.id = "m" + a + "." + b;
+        table.appendChild(newDiv);
+        self.elem = newDiv;
+    };
+};
+
+function setFieldSize(){
+	var size = (width + 1) * 22;
+	document.getElementById('table').style.width = size + "px";
+	document.getElementById('table').style.height = size + "px";
+	if(size > 450){
+		document.getElementById('begin').style.width = size + "px";
 	};
 };
 
-function ifNotFinishDo(x,y,routeArr,route,direct){
-	if(routeArr.length > 1){
-			route =  ifMoreOneRoute(routeArr,direct);
+function dontEnterSize(){
+	matrixSize.disabled = true;
+	matrixBomb.disabled = true;
+	startButton.disabled = true;
+};
+
+function matrix() {
+    var matrix = [],
+    	table = document.getElementById('table');
+    for (var i = 0; i <= width; i++) {
+        matrix[i] = [];
+        for (var j = 0; j <= height; j++) {
+            matrix[i][j] = new cellObj(table);
+            matrix[i][j].create(i, j);
+        };
+    };
+    return matrix;
+};
+
+function matrixData(){
+	height = +document.getElementById("matrixSize").value -1;
+	width = +document.getElementById("matrixSize").value -1;
+	bomb = +document.getElementById("matrixBomb").value;
+	if(!isNumeric(height)||!isNumeric(bomb)){
+		alert("Вы ввели не число");
+		reload();
+	}else{
+		if((height+1)*(width+1) >= bomb){
+			setFieldSize(); 
+			dontEnterSize();
+			bombMatrix = matrix();	
+			bombPosition();
 		}else{
- 			route = ifOnlyRoute(x,y,routeArr);
+			alert("Бомб не может быть больше количества ячеек");
+			reload();
 		};
-		setRoute(x,y,route);
+	};
 };
 
-function ifNotFinish(x,y){
-	var finPos = finishPosition();
-	return x === finPos[0] && y === finPos[1]?false:true;
-};
-
-function choiceRouteWOWall(x,y,arr){
-	wallAround(x,y)[0].forEach(function(item,i){
-		if(item){
-	   		arr.push(i);
-   		};
-	});
+function getPositionDiv(elem){
+	var arr = elem.id.slice(1,elem.id.length).split(".");
+	arr[0] = +arr[0];
+	arr[1] = +arr[1];
 	return arr;
 };
 
-function ifOnlyRoute(x,y,routeArr){
- 	field[y][x].lock = true;
- 	return routeArr[0];
+function openCell(item) {
+    if (!item.open) {
+		item.elem.click();
+    };
 };
 
-function ifMoreOneRoute(routeArr,direct){	
-		// допилить счетчик на элементы, где меньше счет туда в первую очередь
-		// проверяет доступно ли предыдущее направление если да то идет дальше
-		// а вот если нет удаляет из доступных направление назад -  чтоб туда сюда не ходил
-		// на элемент нужно повесить счеткик наездов и выбирать направление там где их меньше
-	var route =  ifRouteFree(routeArr,direct);	
-	if(route === null){	
-		if(direct === 0){											
-			routeArr.splice(routeArr.indexOf(1), 1);
-		};
-		if(direct === 1){
-			routeArr.splice(routeArr.indexOf(0), 1);
-		};
-		if(direct === 2){
-			routeArr.splice(routeArr.indexOf(3), 1);
-		};
-		if(direct === 3){
-			routeArr.splice(routeArr.indexOf(2), 1);
-		};
-		var rand = Math.floor(Math.random() * routeArr.length);
-		route = routeArr[rand];
-	}
-	return route;  	
+function processButtonClick(element) {
+    element.classList.add("near");
+	var takeIJs = getPositionDiv(element),
+	 	i = +takeIJs[0],
+     	j = +takeIJs[1],
+     	surCellsArr = getSurroundCells(i, j),
+     	bombAround = getBombSurroundSum(i, j, surCellsArr);
+	if (bombMatrix[i][j].iThink){
+		bombMatrix[i][j].iThink = false;
+		element.classList.remove("flag");
+	} else {
+		if (bombMatrix[i][j].bomb) {
+       		gameOver(element);
+    	} else {
+        	doOpenCell(i, j, element, bombAround, surCellsArr);
+    	};	
+	};	    
 };
 
-function ifRouteFree(routeArr,direct){
-	var route = null;
-	routeArr.forEach(function(item){
-		if(item === direct){
-			route = direct;
-		}
+function processButtonClickRight(element) {
+    var takeIJs = getPositionDiv(element),
+		i = +takeIJs[0],
+    	j = +takeIJs[1];
+    if (!bombMatrix[i][j].open) {
+        if (!bombMatrix[i][j].iThink) {
+            bombMatrix[i][j].iThink = true;
+            element.classList.add("flag");
+        } else {
+            bombMatrix[i][j].iThink = false;
+            element.classList.remove("flag");
+        };
+    };
+    winYouInspect();
+};
+
+function doOpenCell(i, j, elem, bombSur, surCellsArr){
+	if (bombSur === 0) {
+            elem.classList.add("empty");
+           surCellsArr.forEach(openCell); 
+        };
+    bombMatrix[i][j].open = true;
+    elem.innerHTML = "<div class=\"bombAroundText\">" + bombSur + "</div>";
+};
+
+function winYouInspect(){
+	if (isBombPositionTrue()) {
+        alert('YOU WIN');
+        reload();
+    };
+};
+
+function gameOver(element){
+	element.classList.add("bomb");
+    alert("GAME OVER");
+    reload();
+};
+
+function bombPosition() {
+    for (var b = 0; b < bomb; b++) {
+        function bombOne() {
+            var i = random(0, height);
+            var j = random(0, width);
+            if (bombMatrix[i][j].bomb) {
+                bombOne();
+            } else {
+                bombMatrix[i][j].bomb = true;
+            };
+        };
+        bombOne();
+    };
+};
+
+function isBombPositionTrue() {
+    var arr = bombMatrix.reduce(function (a, b) {
+        return a.concat(b);
+    });
+	var sumBombFlaf = arr.filter(function(a){
+		return a.iThink;
 	});
-	return route;
+	if(bomb === sumBombFlaf.length){ 
+		var bombArr = arr.filter(function (a) {
+			return a.bomb;
+		});
+		return bombArr.every(function (a) {
+			return a.bomb === a.iThink;
+		});
+	};
 };
 
-function setRoute(x,y,route){
-	setTimeout(function(){
-   		switch (route) {
-		case 0:
-			moveLeft(x,y);
-			break;
-		case 1:
-			moveRight(x,y);
-			break;
-		case 2:
-			moveUp(x,y);
-			break;
-		case 3:
-			moveDown(x,y);
-			break;
-		default:
-			console.log("route error");
-		};
-	},500);
+function getSurroundCells(i, j) {
+    var arr = [];
+    for (var a = i - 1; a <= i + 1; a++) {
+        for (var b = j - 1; b <= j + 1; b++) {
+            if (a >= 0 && a <= width && b >= 0 && b <= height) {
+                if (!(a === i && b === j)){
+                    arr.push(bombMatrix[a][b]);
+                };
+            };
+        };
+    };
+    return arr;
+};
+
+function getBombSurroundSum(i, j,surCellsArr) {
+    return surCellsArr.filter(function (elem) {
+        return elem.bomb === true;
+    }).length;
 };
 
 
-function doStep(xNow,yNow,xNext,yNext,direct){
-  	if(wallAround(xNow,yNow)[0][direct]){
-   		position(xNow,yNow,xNext,yNext);
-   		choiceRoute(xNext,yNext,direct);
-	}else{
-   		choiceRoute(xNow,yNow,direct);
-	}
-};
-
-function moveLeft(x,y){
-	doStep(x,y,x-1,y,0);
-};
-
-function moveRight(x,y){
-	doStep(x,y,x+1,y,1);
-};
-
-function moveUp(x,y){
-	doStep(x,y,x,y-1,2);
-};
-
-function moveDown(x,y){
-	doStep(x,y,x,y+1,3);
-};
-
-function wallAroundSum(routes){
-	return routes.reduce(function(result,current){
-		return current?result+1:result;
-   	});
-};
-	
-function wallAround(x,y){
-	var left = x-1 < 0 || field[y][x-1].wall || field[y][x-1].lock?false:true,
-		right = x+1 > field[0].length || field[y][x+1].wall || field[y][x+1].lock?false:true,			
-		up = y-1 < 0 || field[y-1][x].wall || field[y-1][x].lock?false:true,
-		down = y+1 > field.length || field[y+1][x].wall || field[y+1][x].lock?false:true,
-		arr = [left,right,up,down];
-	var trueSum = wallAroundSum(arr);
-	return [arr,trueSum];
-};
-
-run();
+var height,
+	width,
+	bomb,
+    bombMatrix;

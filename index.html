@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 	<head>
-  		<meta charset="utf-8">
-  		<title>labyrinth</title>
-  		<link rel="stylesheet" type="text/css" href="style.css">
-  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
-  		<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
-  		<script>
-    		mocha.setup('bdd');
-  		</script>
-  		<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
-  		<script>
-    		var assert = chai.assert;
-  		</script>
+  	<meta charset="utf-8">
+  	<title>Saper</title>
+  	<link rel="stylesheet" type="text/css" href="style.css">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+  	<script>
+    	mocha.setup('bdd');
+    </script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+  	<script>
+    	var assert = chai.assert;
+		</script>
  	</head>
 	<body>
-    	<div class="main"></div>
-    	<script src="showLabyrinth.js"></script>
-    	<script src="script.js"></script>
-    	<script src="test.js"></script>
-    	<div id="mocha"></div>
-  		<script>
-    		mocha.run();
-  		</script>
+    <div id = "begin">
+    <form id ="formBoom">
+      Размер матрицы  <input type ="text" id = "matrixSize" size="2" value="20">        
+      Кол-во бомб  <input type ="text" id = "matrixBomb" size="2" value="50">    
+      <input value = "START" type ="button" id="startButton">
+      <input value = "FAQ" type ="button" id="infoButton">   
+    </form>
+    </div><br/>
+    <div id = "table"></div>
+    <script src="script.js"></script>
+    <script src="test.js"></script>
+  	<div id="mocha"></div>
+		<script>
+      mocha.run();
+  	</script>
 	</body>
 </html>
+
+
