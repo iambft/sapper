@@ -111,7 +111,6 @@ function getPositionDiv(elem){
 };
 
 function processButtonClick(element) {
-    element.classList.add("near");
 	var takeIJs = getPositionDiv(element),
 	 	i = +takeIJs[0],
      	j = +takeIJs[1],
@@ -120,10 +119,12 @@ function processButtonClick(element) {
 	if (bombMatrix[i][j].iThink){
 		bombMatrix[i][j].iThink = false;
 		element.classList.remove("flag");
+		showBombLeft(false);
 	} else {
 		if (bombMatrix[i][j].bomb) {
        		gameOver(element);
     	} else {
+    		element.classList.add("near");
         	doOpenCell(i, j, element, bombAround, surCellsArr);
     	};	
 	};	    
@@ -134,12 +135,14 @@ function processButtonClickRight(element) {
 		i = +takeIJs[0],
     	j = +takeIJs[1];
     if (!bombMatrix[i][j].open) {
-        if (!bombMatrix[i][j].iThink) {
+        if (!bombMatrix[i][j].iThink && matrixBomb.value > 0) {
             bombMatrix[i][j].iThink = true;
             element.classList.add("flag");
+            showBombLeft(true);
         } else {
             bombMatrix[i][j].iThink = false;
             element.classList.remove("flag");
+            showBombLeft(false);
         };
     };
     winYouInspect();
@@ -160,6 +163,13 @@ function doOpenCell(i, j, elem, bombSur, surCellsArr){
     		elem.innerHTML = "<div class=\"bombAroundText\">" + bombSur + "</div>";
         }
   
+};
+function showBombLeft(up){
+	if (up){
+		matrixBomb.value = matrixBomb.value - 1;
+	}else{
+		matrixBomb.value = +matrixBomb.value + 1;
+	};
 };
 
 function winYouInspect(){
