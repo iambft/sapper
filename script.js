@@ -117,8 +117,6 @@ function processButtonClick(element) {
      	j = +takeIJs[1],
      	surCellsArr = getSurroundCells(i, j),
      	bombAround = getBombSurroundSum(i, j, surCellsArr);
-     		console.log(element)
-     		console.log(i,j)
 	if (bombMatrix[i][j].iThink){
 		bombMatrix[i][j].iThink = false;
 		element.classList.remove("flag");
