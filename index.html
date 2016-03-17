@@ -1,35 +1,39 @@
-<!DOCTYPE html>
-	<head>
-  	<meta charset="utf-8">
-  	<title>Saper</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  	<link rel="stylesheet" type="text/css" href="style.css">
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
-  	<script>
-    	mocha.setup('bdd');
-    </script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
-  	<script>
-    	var assert = chai.assert;
-		</script>
- 	</head>
-	<body>
-    <div id = "begin">
-    <form id ="formBoom">
-      Поле  <input type ="text" id = "matrixSize" size="2" value="20">        
-      Бомб  <input type ="text" id = "matrixBomb" size="2" value="50">    
-      <input value = "START" type ="button" id="startButton">
-      <input value = "RESTART" type ="button" id="restart">
-      <input value = "FAQ" type ="button" id="infoButton">
-    </form>
-    </div><br/>
-    <div id = "table"></div>
-    <script src="script.js"></script>
-    <script src="test.js"></script>
-  	<div id="mocha"></div>
-		<script>
-      mocha.run();
-  	</script>
-	</body>
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Saper</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+	<script>
+		mocha.setup('bdd');
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+	<script>
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div id="main">
+		<form id="formBoom">
+			Поле  <input type="text" id="matrixSize" size="2" value="20">
+			Бомб  <input type="text" id="matrixBomb" size="2" value="50">
+			<input value="START" type="button" id="startButton">
+			<input value="RESTART" type="button" id="restart">
+			<input value="FAQ" type="button" id="infoButton">
+		</form>
+		<div id="faq">
+			Левая кнопка мыши открывает ячейки, правая маркирует. Нужно поставить маркер на все бомбы.
+		</div>
+		<div id="table"></div>
+	</div>
+	<script src="script.js"></script>
+	<script src="test.js"></script>
+	<div id="mocha"></div>
+	<script>
+		mocha.run();
+	</script>
+</body>
 </html>

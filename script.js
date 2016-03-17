@@ -36,7 +36,7 @@ function reload() {
 };
 
 function info() {
-	alert("Левая кнопка мыши открывает ячейки, правая маркирует. Нужно поставить маркер на все бомбы.");
+	 document.getElementById("faq").classList.toggle('show');
 };
 
 function cellObj(table) {
@@ -64,7 +64,7 @@ function setFieldSize() {
 	document.getElementById('table').style.width = size + "px";
 	document.getElementById('table').style.height = size + "px";
 	if (size > MENU_WIDTH_PX) {
-		document.getElementById('begin').style.width = size + "px";
+		document.getElementById('main').style.width = size + "px";
 	};
 };
 

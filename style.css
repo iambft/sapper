@@ -1,21 +1,40 @@
+body {
+	margin: 40px !important;
+}
+
 #table {
 	background-color: white;
 	text-align: center;
 	line-height: 0px;
 	display: inline-block;
-	margin: 0 0 40px 40px;
 }
 
-#begin {
-	background-color: #99CCCC;
-	height: 30px;
+#main {
 	width: 400px;
-	text-align: center;
+}
+
+#formBoom {
 	padding: 7px 0 0 0;
-	margin: 40px 0 0 40px;
+	height: 30px;
+	width: inherit;
 	display: inline-block;
 	border: solid black 1px;
+	text-align: center;
+	background-color: #99CCCC;
 }
+
+#faq {
+	overflow: hidden;
+	height: 0px;
+	width: inherit;
+	border: 1px solid #E6EBE0;
+	background-color: #E6EBE0;
+	transition: height 500ms;
+}
+
+	#faq.show {
+		height: 50px;
+	}
 
 p {
 	position: absolute;
@@ -38,11 +57,12 @@ p {
 	box-shadow: 0 0 4px 0px black;
 	transition: all 250ms ease-in-out;
 	cursor: pointer;
+	font-size: 16px;
 }
 
 .bombAroundText {
-	/*position: absolute;
-	width: 20px;
+	/*
+		
 	text-align: center;
 	line-height: 20px;
 	font-size: 16px;*/
