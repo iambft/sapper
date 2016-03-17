@@ -1,74 +1,82 @@
 #table {
-    background-color: white;
-    text-align: center;
-    line-height: 0px;
-    display: inline-block;
-    margin:0 0 40px 40px;
+	background-color: white;
+	text-align: center;
+	line-height: 0px;
+	display: inline-block;
+	margin: 0 0 40px 40px;
 }
+
 #begin {
-    background-color: PaleTurquoise;
-    height: 30px;
-    width: 400px;
-    text-align: center;
-    padding:  7px 0 0 0;
-    margin:40px 0 0 40px;
-    display: inline-block;
-    border:solid black 1px;
-
+	background-color: PaleTurquoise;
+	height: 30px;
+	width: 400px;
+	text-align: center;
+	padding: 7px 0 0 0;
+	margin: 40px 0 0 40px;
+	display: inline-block;
+	border: solid black 1px;
 }
+
 p {
-    position: absolute;
-    margin: 16px 0px;
-    width: 50px;
-    text-align: center;
-}
-.cell {
-    position: relative;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0px;
-    padding: 1px;
-    background-color: gray;
-    box-shadow: 0 0 4px 0px black;
-    transition: all 250ms ease-in-out;
+	position: absolute;
+	margin: 16px 0px;
+	width: 50px;
+	text-align: center;
 }
 
-.bombAroundText{
-    position: absolute;
-    width: 20px;
-    text-align: center; 
-    line-height: 20px;
-    font-size: 16px;
+.cell {
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin: 0px;
+	padding: 1px;
+	background-color: #E6EBE0;
+	box-shadow: 0 0 4px 0px black;
+	transition: all 250ms ease-in-out;
 }
+
+.bombAroundText {
+	position: absolute;
+	width: 20px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 16px;
+}
+
 .near {
-    background-color: teal;
+	background-color: teal;
 }
+
 .empty {
-    opacity: 0.4;
+	opacity: 0.4;
 }
+
 .flag {
-    background-color: orange;
+	background-color: orange;
 }
-.flag:after {
-    content:'☢';
-    top: 1px;
-    left: 2px;
-    position: absolute;
-    font-size: 20px;
-    font-weight: bold;
-    opacity: 0.5;
-    line-height: 100%;
-}
+
+	.flag:after {
+		content: '☢';
+		top: 1px;
+		left: 2px;
+		position: absolute;
+		font-size: 20px;
+		font-weight: bold;
+		opacity: 0.5;
+		line-height: 100%;
+	}
+
 .bomb {
 }
-.bomb:after {
-    content: "💣";
-    top: 1px;
-    left: 1px;
-    position: absolute;
-    font-size: 20px;
-    font-weight: bold;
-    opacity: 0.5;
-    line-height: 100%;
-}
+
+	.bomb:after {
+		content: "💣";
+		top: 5px;
+		left: 2px;
+		position: absolute;
+		font-size: 16px;
+		font-weight: bold;
+		opacity: 0.5;
+		line-height: 100%;
+	}
