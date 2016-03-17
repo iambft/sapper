@@ -1,18 +1,19 @@
 #table {
-    background-color: white !important;
+    background-color: white;
     text-align: center;
     line-height: 0px;
     display: inline-block;
     margin:0 0 40px 40px;
 }
 #begin {
-    background-color: aqua !important;
+    background-color: DarkSlateGray;
     height: 30px;
     width: 400px;
     text-align: center;
     padding:  7px 0 0 0;
     margin:40px 0 0 40px;
     display: inline-block;
+    border:solid black 1px;
 
 }
 p {
@@ -44,7 +45,7 @@ p {
     font-size: 16px;
 }
 .near {
-    background-color: green;
+    background-color: teal;
 }
 .empty {
     opacity: 0.4;
@@ -63,11 +64,9 @@ p {
     line-height: 100%;
 }
 .bomb {
-    background-color: red;
-    border-radius: 10px;
 }
 .bomb:after {
-    content:'☠';
+    content:"💣";
     top: 1px;
     left: 1px;
     position: absolute;

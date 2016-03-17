@@ -70,6 +70,11 @@ function dontEnterSize(){
 	startButton.disabled = true;
 };
 
+function bombLeftBold(){
+	matrixBomb.style.fontWeight = "700";
+	matrixBomb.style.background = "Coral";
+};
+
 function matrix() {
     var matrix = [],
     	table = document.getElementById('table');
@@ -94,6 +99,7 @@ function matrixData(){
 		if((height+1) * (width+1) >= bomb){
 			setFieldSize(); 
 			dontEnterSize();
+			bombLeftBold();
 			bombMatrix = matrix();	
 			bombPosition();
 		}else{
@@ -193,7 +199,6 @@ function winYouInspect(){
 };
 
 function gameOver(element){
-	//element.classList.add("bomb");
 	showAllBomb();
     alert("GAME OVER");
     reload();
