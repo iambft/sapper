@@ -1,3 +1,5 @@
+"use strict";
+
 table.addEventListener('click', function (evt) {
     if (evt.target.nodeName.toLowerCase() === 'div') {
         processButtonClick(evt.target);
@@ -14,6 +16,8 @@ table.addEventListener('contextmenu', function (evt) {
 startButton.addEventListener('click', matrixData);
 
 infoButton.addEventListener('click', info);
+
+restart.addEventListener('click', reload);
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -44,14 +48,18 @@ function cellObj(table) {
         newDiv.id = "m" + a + "." + b;
         table.appendChild(newDiv);
         self.elem = newDiv;
+        self.x = a;
+        self.y = b;
     };
 };
 
 function setFieldSize(){
-	var size = (width + 1) * 22;
+	var ELEM_WIDTH_PX = 22,
+		MENU_WIDTH_PX = 400,
+		size = (width + 1) * ELEM_WIDTH_PX;
 	document.getElementById('table').style.width = size + "px";
 	document.getElementById('table').style.height = size + "px";
-	if(size > 450){
+	if(size > MENU_WIDTH_PX){
 		document.getElementById('begin').style.width = size + "px";
 	};
 };
@@ -79,11 +87,11 @@ function matrixData(){
 	height = +document.getElementById("matrixSize").value -1;
 	width = +document.getElementById("matrixSize").value -1;
 	bomb = +document.getElementById("matrixBomb").value;
-	if(!isNumeric(height)||!isNumeric(bomb)){
+	if(!isNumeric(height) || !isNumeric(bomb)){
 		alert("Вы ввели не число");
 		reload();
 	}else{
-		if((height+1)*(width+1) >= bomb){
+		if((height+1) * (width+1) >= bomb){
 			setFieldSize(); 
 			dontEnterSize();
 			bombMatrix = matrix();	
@@ -102,12 +110,6 @@ function getPositionDiv(elem){
 	return arr;
 };
 
-function openCell(item) {
-    if (!item.open) {
-		item.elem.click();
-    };
-};
-
 function processButtonClick(element) {
     element.classList.add("near");
 	var takeIJs = getPositionDiv(element),
@@ -115,6 +117,8 @@ function processButtonClick(element) {
      	j = +takeIJs[1],
      	surCellsArr = getSurroundCells(i, j),
      	bombAround = getBombSurroundSum(i, j, surCellsArr);
+     		console.log(element)
+     		console.log(i,j)
 	if (bombMatrix[i][j].iThink){
 		bombMatrix[i][j].iThink = false;
 		element.classList.remove("flag");
@@ -143,13 +147,21 @@ function processButtonClickRight(element) {
     winYouInspect();
 };
 
-function doOpenCell(i, j, elem, bombSur, surCellsArr){
+function autoOpenCell(item) {
+    if (!item.open) {
+    	item.open = true;
+		processButtonClick(item.elem);
+    };
+};
+
+function doOpenCell(i, j, elem, bombSur, surCellsArr){	
 	if (bombSur === 0) {
             elem.classList.add("empty");
-           surCellsArr.forEach(openCell); 
-        };
-    bombMatrix[i][j].open = true;
-    elem.innerHTML = "<div class=\"bombAroundText\">" + bombSur + "</div>";
+           surCellsArr.forEach(autoOpenCell); 
+        }else{
+    		elem.innerHTML = "<div class=\"bombAroundText\">" + bombSur + "</div>";
+        }
+  
 };
 
 function winYouInspect(){
