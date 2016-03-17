@@ -179,7 +179,7 @@ function showAllBomb(){
 	bombMatrix.forEach(function(arr){
 		arr.forEach(function(item){
 			if(item.bomb === true){
-				item.elem.style.background = "red";
+				item.elem.classList.add("bomb");
 			};	
 		});
 	});
@@ -193,7 +193,7 @@ function winYouInspect(){
 };
 
 function gameOver(element){
-	element.classList.add("bomb");
+	//element.classList.add("bomb");
 	showAllBomb();
     alert("GAME OVER");
     reload();

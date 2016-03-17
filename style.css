@@ -64,6 +64,7 @@ p {
 }
 .bomb {
     background-color: red;
+    border-radius: 10px;
 }
 .bomb:after {
     content:'☠';
