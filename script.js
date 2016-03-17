@@ -139,10 +139,12 @@ function processButtonClickRight(element) {
             bombMatrix[i][j].iThink = true;
             element.classList.add("flag");
             showBombLeft(true);
-        } else {
-            bombMatrix[i][j].iThink = false;
-            element.classList.remove("flag");
-            showBombLeft(false);
+        }else{
+        	if(bombMatrix[i][j].iThink && matrixBomb.value >= 0){
+            	bombMatrix[i][j].iThink = false;
+            	element.classList.remove("flag");
+            	showBombLeft(false);
+            };
         };
     };
     winYouInspect();
