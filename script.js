@@ -122,18 +122,15 @@ function processButtonClick(element) {
      	j = +takeIJs[1],
      	surCellsArr = getSurroundCells(i, j),
      	bombAround = getBombSurroundSum(i, j, surCellsArr);
-	if (bombMatrix[i][j].iThink){
-		bombMatrix[i][j].iThink = false;
-		element.classList.remove("flag");
-		showBombLeft(false);
-	} else {
-		if (bombMatrix[i][j].bomb) {
-       		gameOver(element);
-    	} else {
-    		element.classList.add("near");
-        	doOpenCell(i, j, element, bombAround, surCellsArr);
-    	};	
-	};	    
+	if (bombMatrix[i][j].bomb) {
+       	gameOver(element);
+    } else {
+    	if (bombMatrix[i][j].iThink){
+			bombChekout(i,j,element);
+		};
+    	element.classList.add("near");
+        doOpenCell(i, j, element, bombAround, surCellsArr);
+    };		    
 };
 
 function processButtonClickRight(element) {
@@ -147,13 +144,17 @@ function processButtonClickRight(element) {
             showBombLeft(true);
         }else{
         	if(bombMatrix[i][j].iThink && matrixBomb.value >= 0){
-            	bombMatrix[i][j].iThink = false;
-            	element.classList.remove("flag");
-            	showBombLeft(false);
+            	bombChekout(i,j,element);
             };
         };
     };
     winYouInspect();
+};
+
+function bombChekout(i,j,element){
+	bombMatrix[i][j].iThink = false;
+	element.classList.remove("flag");
+	showBombLeft(false);
 };
 
 function autoOpenCell(item) {

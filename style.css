@@ -6,7 +6,7 @@
     margin:0 0 40px 40px;
 }
 #begin {
-    background-color: DarkSlateGray;
+    background-color: PaleTurquoise;
     height: 30px;
     width: 400px;
     text-align: center;
@@ -24,14 +24,11 @@ p {
 }
 .cell {
     position: relative;
-    /* position: absolute;*/
     display: inline-block;
-    /*line-height: 20px;*/
     width: 20px;
     height: 20px;
     margin: 0px;
     padding: 1px;
-    /*font-size: 16px;*/
     background-color: gray;
     box-shadow: 0 0 4px 0px black;
     transition: all 250ms ease-in-out;
@@ -66,7 +63,7 @@ p {
 .bomb {
 }
 .bomb:after {
-    content:"💣";
+    content: "💣";
     top: 1px;
     left: 1px;
     position: absolute;
