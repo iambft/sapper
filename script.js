@@ -174,6 +174,17 @@ function showBombLeft(up){
 	};
 };
 
+function showAllBomb(){
+	console.log(bombMatrix);
+	bombMatrix.forEach(function(arr){
+		arr.forEach(function(item){
+			if(item.bomb === true){
+				item.elem.style.background = "red";
+			};	
+		});
+	});
+};
+
 function winYouInspect(){
 	if (isBombPositionTrue()) {
         alert('YOU WIN');
@@ -183,6 +194,7 @@ function winYouInspect(){
 
 function gameOver(element){
 	element.classList.add("bomb");
+	showAllBomb();
     alert("GAME OVER");
     reload();
 };
