@@ -7,7 +7,7 @@
 }
 
 #begin {
-	background-color: PaleTurquoise;
+	background-color: #99CCCC;
 	height: 30px;
 	width: 400px;
 	text-align: center;
@@ -25,6 +25,9 @@ p {
 }
 
 .cell {
+	vertical-align: top;
+	line-height: 20px;
+	text-align: center;
 	position: relative;
 	display: inline-block;
 	width: 20px;
@@ -34,14 +37,15 @@ p {
 	background-color: #E6EBE0;
 	box-shadow: 0 0 4px 0px black;
 	transition: all 250ms ease-in-out;
+	cursor: pointer;
 }
 
 .bombAroundText {
-	position: absolute;
+	/*position: absolute;
 	width: 20px;
 	text-align: center;
 	line-height: 20px;
-	font-size: 16px;
+	font-size: 16px;*/
 }
 
 .near {
@@ -50,6 +54,7 @@ p {
 
 .empty {
 	opacity: 0.4;
+	box-shadow: 0 0 1px 0px black;
 }
 
 .flag {
